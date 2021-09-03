@@ -33,7 +33,7 @@ layui.use(['form','jquery','jquery_cookie'], function () {
                        $.removeCookie("userName",{domain:"localhost",path:"/crm"});
                        $.removeCookie("trueName",{domain:"localhost",path:"/crm"});
 
-                       //跳转到登陆页面
+                       //跳转到登陆页面 (父窗口跳转)
                         window.parent.location.href = ctx+"/index";
                     });
                 }else{

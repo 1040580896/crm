@@ -65,7 +65,7 @@
 
 
 
-        <table tableName="t_user" domainObjectName="User"
+        <table tableName="t_sale_change" domainObjectName="SaleChance"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 

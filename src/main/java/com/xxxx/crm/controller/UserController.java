@@ -35,22 +35,26 @@ public class UserController extends BaseController {
     public ResultInfo userLogin(String userName,String userPwd){
 
         ResultInfo resultInfo = new ResultInfo();
+        //调用service层方法
+        UserModel userModel = userService.userLogin(userName, userPwd);
+        //设置ResultInfo的result的值  将数据返回给请求)
+        resultInfo.setResult(userModel);
         //通过try catch捕获service层的异常，如果service抛出异常，则表示登陆失败，否则失败
-        try {
-
-            //调用service层方法
-            UserModel userModel = userService.userLogin(userName, userPwd);
-            //设置ResultInfo的result的值  将数据返回给请求)
-            resultInfo.setResult(userModel);
-
-        }catch (ParamsException p){
-            resultInfo.setCode(p.getCode());
-            resultInfo.setMsg(p.getMsg());
-            p.printStackTrace();
-        }catch (Exception e){
-            resultInfo.setCode(500);
-            resultInfo.setMsg("登陆失败！");
-        }
+        // try {
+        //
+        //     //调用service层方法
+        //     UserModel userModel = userService.userLogin(userName, userPwd);
+        //     //设置ResultInfo的result的值  将数据返回给请求)
+        //     resultInfo.setResult(userModel);
+        //
+        // }catch (ParamsException p){
+        //     resultInfo.setCode(p.getCode());
+        //     resultInfo.setMsg(p.getMsg());
+        //     p.printStackTrace();
+        // }catch (Exception e){
+        //     resultInfo.setCode(500);
+        //     resultInfo.setMsg("登陆失败！");
+        // }
 
         return resultInfo;
     }
@@ -78,21 +82,26 @@ public class UserController extends BaseController {
     public ResultInfo updateUserPassword(HttpServletRequest request,
                                          String oldPassword,String newPassword,String repeatPassword){
         ResultInfo resultInfo = new ResultInfo();
-        try {
-            //获取cookie中userId
-            Integer userId = LoginUserUtil.releaseUserIdFromCookie(request);
-            //调用Service层修改
-            userService.updatePassword(userId,oldPassword,newPassword,repeatPassword);
+        //获取cookie中userId
+        Integer userId = LoginUserUtil.releaseUserIdFromCookie(request);
+        //调用Service层修改
+        userService.updatePassword(userId,oldPassword,newPassword,repeatPassword);
 
-        }catch (ParamsException p){
-            resultInfo.setCode(p.getCode());
-            resultInfo.setMsg(p.getMsg());
-            p.printStackTrace();
-        }catch (Exception e){
-            resultInfo.setCode(500);
-            resultInfo.setMsg("修改密码失败");
-            e.printStackTrace();
-        }
+        // try {
+        //     //获取cookie中userId
+        //     Integer userId = LoginUserUtil.releaseUserIdFromCookie(request);
+        //     //调用Service层修改
+        //     userService.updatePassword(userId,oldPassword,newPassword,repeatPassword);
+        //
+        // }catch (ParamsException p){
+        //     resultInfo.setCode(p.getCode());
+        //     resultInfo.setMsg(p.getMsg());
+        //     p.printStackTrace();
+        // }catch (Exception e){
+        //     resultInfo.setCode(500);
+        //     resultInfo.setMsg("修改密码失败");
+        //     e.printStackTrace();
+        // }
 
         return  resultInfo;
     }
