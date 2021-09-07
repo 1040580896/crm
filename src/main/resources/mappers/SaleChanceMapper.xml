@@ -177,12 +177,6 @@
       <if test="createMan != null" >
         create_man = #{createMan,jdbcType=VARCHAR},
       </if>
-      <if test="assignMan != null" >
-        assign_man = #{assignMan,jdbcType=VARCHAR},
-      </if>
-      <if test="assignTime != null" >
-        assign_time = #{assignTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},
       </if>
@@ -198,7 +192,14 @@
       <if test="updateDate != null" >
         update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
+      <!--
+      不判断未空！！！
+      -->
+      assign_man = #{assignMan,jdbcType=VARCHAR},
+      assign_time = #{assignTime,jdbcType=TIMESTAMP},
     </set>
+
+
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xxxx.crm.vo.SaleChance" >
@@ -246,4 +247,17 @@
     </where>
   </select>
 
+  <!--批量删除-->
+  <update id="deleteBatch">
+    update
+        t_sale_chance
+    set
+        is_valid = 0
+    where
+         id
+    in
+    <foreach collection="array" separator="," open="(" close=")" item="id">
+      #{id}
+    </foreach>
+  </update>
 </mapper>

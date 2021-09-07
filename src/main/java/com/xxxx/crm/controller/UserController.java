@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author xiaokaixin
@@ -104,5 +106,16 @@ public class UserController extends BaseController {
         // }
 
         return  resultInfo;
+    }
+
+    /**
+     * 查询所有的销售人员
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("queryAllSales")
+    public List<Map<String,Object>> queryAllSales(){
+
+        return userService.queryAllSales();
     }
 }

@@ -18,8 +18,19 @@ layui.use(['form', 'layer'], function () {
 
         //发送ajax请求
         var url = ctx+"/sale_chance/add";
-        console.log(url);
-        console.log(data)
+        //console.log(url);
+
+        //通过营销机会的Id来判断当前需要执行添加操作还是修改操作
+        //如果营销机会的Id为空，未添加操作，否则是修改操作
+        //通过获取隐藏域的ID
+        var saleChanceId = $("[name='id']").val();
+        //判断ID是否为空，
+        if(saleChanceId!=null&&saleChanceId!=''){
+            url = ctx+"/sale_chance/update"
+        }
+
+        //console.log(url);
+        //console.log(data)
         $.post(url,data.field,function (result){
             //判断操作是否执行成功 200=成功
             if(result.code==200){
@@ -54,6 +65,39 @@ layui.use(['form', 'layer'], function () {
 
     });
 
+    /**
+     * 记载指派人的下拉框
+     */
+    $.ajax({
+        type:"get",
+        url:ctx+"/user/queryAllSales",
+        data:{},
+        success:function (data){
+            //console.log(data);
+            //判断返回的数据是否为空
+            if(data!=null){
+                //获取隐藏域设置的指派人ID
+                var assignManId = $("#assignManId").val();
+                //遍历返回的数据
+                for(var i =0;i<data.length;i++){
+                    //如果循环得到的ID与隐藏域的Id相等，则表示选中
+                    if(assignManId==data[i].id){
+                        //设置下拉选项选中
+                        var opt = "<option value='"+data[i].id+"' selected>"+data[i].uname+"</option>"
+                    }else{
+                        //设置下拉选项
+                        var opt = "<option value='"+data[i].id+"'>"+data[i].uname+"</option>"
+                    }
+
+
+                    //将下拉项设置搭配下拉框中
+                    $("#assignMan").append(opt);
+                }
+            }
+            // 重新渲染下拉框的内容
+            layui.form.render("select")
+        }
+    })
 
     
 });
