@@ -242,7 +242,15 @@
         and s.create_man = #{createMan}
       </if>
       <if test="state!=null">
-        and state =#{state}
+        and s.state =#{state}
+      </if>
+<!--      根据开发状态查询-->
+      <if test="devResult!=null and devResult !=''">
+        and s.dev_result =#{devResult}
+      </if>
+<!--      根据指派人查询-->
+      <if test="assignMan!=null">
+        and s.assign_man =#{assignMan}
       </if>
     </where>
   </select>

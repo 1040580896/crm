@@ -65,7 +65,7 @@
 
 
 
-        <table tableName="t_sale_chance" domainObjectName="SaleChance"
+        <table tableName="t_cus_dev_plan" domainObjectName="CusDevPlan"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 

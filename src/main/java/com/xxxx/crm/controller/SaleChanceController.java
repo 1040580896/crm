@@ -2,9 +2,11 @@ package com.xxxx.crm.controller;
 
 import com.xxxx.crm.base.BaseController;
 import com.xxxx.crm.base.ResultInfo;
+import com.xxxx.crm.enums.StateStatus;
 import com.xxxx.crm.query.SaleChanceQuery;
 import com.xxxx.crm.service.SaleChanceService;
 import com.xxxx.crm.utils.CookieUtil;
+import com.xxxx.crm.utils.LoginUserUtil;
 import com.xxxx.crm.vo.SaleChance;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,12 +31,23 @@ public class SaleChanceController extends BaseController {
 
     /**
      * 营销机会数据查询(分页多条件查询)
+     * 如果flag的值不为空，且值为一，则表示当前查询的是客户开发计划；否则查询营销机会数据
      * @param saleChanceQuery
      * @return
      */
     @RequestMapping("list")
     @ResponseBody
-    public Map<String,Object> querySaleChanceByParams(SaleChanceQuery saleChanceQuery){
+    public Map<String,Object> querySaleChanceByParams(SaleChanceQuery saleChanceQuery,Integer flag,HttpServletRequest request){
+        // 判断flag的值
+        if(flag != null && flag == 1){
+            //查询客户开发计划
+            //设置分配状态
+            saleChanceQuery.setState(StateStatus.STATED.getType());
+            //设置指派人(当前登陆的用户ID）
+            //从cookie获取当前登陆用户的ID
+            Integer userId = LoginUserUtil.releaseUserIdFromCookie(request);
+            saleChanceQuery.setAssignMan(userId);
+        }
         return  saleChanceService.querySaleChanceByParams(saleChanceQuery);
     }
 
@@ -105,5 +118,20 @@ public class SaleChanceController extends BaseController {
         //调用service层的删除方法
         saleChanceService.deleteBatch(ids);
         return success("营销机会删除成功");
+    }
+
+    /**
+     * 更新营销机会的开发状态
+     * @param id
+     * @param devResult
+     * @return com.xxxx.crm.base.ResultInfo
+     */
+    @PostMapping("updateSaleChanceDevResult")
+    @ResponseBody
+    public ResultInfo updateSaleChanceDevResult(Integer id, Integer devResult) {
+
+        saleChanceService.updateSaleChanceDevResult(id, devResult);
+
+        return success("开发状态更新成功！");
     }
 }
