@@ -4,8 +4,10 @@ import com.xxxx.crm.base.BaseController;
 import com.xxxx.crm.base.ResultInfo;
 import com.xxxx.crm.exceptions.ParamsException;
 import com.xxxx.crm.model.UserModel;
+import com.xxxx.crm.query.UserQuery;
 import com.xxxx.crm.service.UserService;
 import com.xxxx.crm.utils.LoginUserUtil;
+import com.xxxx.crm.vo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -118,4 +120,70 @@ public class UserController extends BaseController {
 
         return userService.queryAllSales();
     }
+
+    /**
+     * 分页多条件查询用户列表
+     * @param userQuery
+     * @return
+     */
+    @RequestMapping("list")
+    @ResponseBody
+    public Map<String,Object> selectByParams(UserQuery userQuery){
+
+        return userService.queryByParamsForTable(userQuery);
+    }
+
+    /**
+     * 进入用户列表页面
+     * @return
+     */
+    @RequestMapping("index")
+    public String index(){
+
+        return "user/user";
+    }
+
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
+    @PostMapping("add")
+    @ResponseBody
+    public ResultInfo addUser(User user){
+        userService.addUser(user);
+        return success("用户添加成功");
+    }
+
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
+    @PostMapping("update")
+    @ResponseBody
+    public ResultInfo updateUser(User user){
+        userService.updateUser(user);
+        return success("用户更新成功");
+    }
+
+    /**
+     * 打卡添加或修改用户的界面
+     * @return
+     */
+    @RequestMapping("toAddOrUpdateUserPage")
+    public String toAddOrUpdateUserPage(Integer id,HttpServletRequest request){
+
+        //判读id是否为空，不为空表示更新操作，查询用户对象
+        if(id!=null){
+            //通过id查询用户对象
+            User user = userService.selectByPrimaryKey(id);
+            //将数据设置到请求与中
+            request.setAttribute("userInfo",user);
+
+        }
+        return "user/add_update";
+    }
+
+
 }

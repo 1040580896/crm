@@ -222,24 +222,20 @@
 
   <!-- 查询所有的客户经理 -->
   <select id="queryAllCustomerManagers" resultType="java.util.Map">
-    SELECT
-            u.id,u.user_name uname
-    from
-            t_user u
-                    left join
-                    t_user_role ur
-                            on
-                                    u.id = ur.user_id
-                    left join
-                    t_role r
-                            on
-                                    r.id = ur.role_id
-    where
-            u.is_valid = 1
-      and
-            r.is_valid = 1
-      and
-            r.role_name = '客户经理'
+    SELECT u.id,
+           u.user_name uname
+    from t_user u
+                 left join
+                 t_user_role ur
+                         on
+                                 u.id = ur.user_id
+                 left join
+                 t_role r
+                         on
+                                 r.id = ur.role_id
+    where u.is_valid = 1
+      and r.is_valid = 1
+      and r.role_name = '客户经理'
   </select>
 
 </mapper>
