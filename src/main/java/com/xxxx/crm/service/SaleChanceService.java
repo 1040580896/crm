@@ -243,6 +243,8 @@ public class SaleChanceService extends BaseService<SaleChance,Integer> {
 
     /***
      *更新营销机会的开发状态
+     *     成功=2
+     *     失败=3
      * @param id
      * @param devResult
      * @return void

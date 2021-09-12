@@ -12,9 +12,8 @@ public class CusDevPlan {
 
     private String planItem;
 
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")     //如果传递的参数是Date类型，要求传入的字符串的格式
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // 如果传递的参数是Date类型，要求传入的时间字符串的格式
     private Date planDate;
 
     private String exeAffect;
@@ -89,19 +88,5 @@ public class CusDevPlan {
 
     public void setIsValid(Integer isValid) {
         this.isValid = isValid;
-    }
-
-    @Override
-    public String toString() {
-        return "CusDevPlan{" +
-                "id=" + id +
-                ", saleChanceId=" + saleChanceId +
-                ", planItem='" + planItem + '\'' +
-                ", planDate=" + planDate +
-                ", exeAffect='" + exeAffect + '\'' +
-                ", createDate=" + createDate +
-                ", updateDate=" + updateDate +
-                ", isValid=" + isValid +
-                '}';
     }
 }

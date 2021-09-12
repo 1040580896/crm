@@ -91,7 +91,6 @@ public class CusDevPlanService extends BaseService<CusDevPlan,Integer> {
         /* 3. 执行添加操作，判断受影响的行数 */
         AssertUtil.isTrue(cusDevPlanMapper.insertSelective(cusDevPlan) != 1, "计划项数据添加失败！");
 
-
     }
 
     /**
@@ -167,7 +166,6 @@ public class CusDevPlanService extends BaseService<CusDevPlan,Integer> {
 
         //执行更新操作
         AssertUtil.isTrue(cusDevPlanMapper.updateByPrimaryKeySelective(cusDevPlan)!=1,"计划项数据参数失败");
-
 
     }
 }

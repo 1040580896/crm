@@ -15,7 +15,7 @@
     id, sale_chance_id, plan_item, plan_date, exe_affect, create_date, update_date, is_valid
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_cus_dev_plan
     where id = #{id,jdbcType=INTEGER}
@@ -25,12 +25,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xxxx.crm.vo.CusDevPlan" >
-    insert into t_cus_dev_plan (id, sale_chance_id, plan_item, 
-      plan_date, exe_affect, create_date, 
-      update_date, is_valid)
-    values (#{id,jdbcType=INTEGER}, #{saleChanceId,jdbcType=INTEGER}, #{planItem,jdbcType=VARCHAR}, 
-      #{planDate,jdbcType=TIMESTAMP}, #{exeAffect,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{updateDate,jdbcType=TIMESTAMP}, #{isValid,jdbcType=INTEGER})
+    insert into t_cus_dev_plan (id, sale_chance_id, plan_item,
+                                plan_date, exe_affect, create_date,
+                                update_date, is_valid)
+    values (#{id,jdbcType=INTEGER}, #{saleChanceId,jdbcType=INTEGER}, #{planItem,jdbcType=VARCHAR},
+            #{planDate,jdbcType=TIMESTAMP}, #{exeAffect,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+            #{updateDate,jdbcType=TIMESTAMP}, #{isValid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xxxx.crm.vo.CusDevPlan" >
     insert into t_cus_dev_plan
@@ -117,23 +117,24 @@
   <update id="updateByPrimaryKey" parameterType="com.xxxx.crm.vo.CusDevPlan" >
     update t_cus_dev_plan
     set sale_chance_id = #{saleChanceId,jdbcType=INTEGER},
-      plan_item = #{planItem,jdbcType=VARCHAR},
-      plan_date = #{planDate,jdbcType=TIMESTAMP},
-      exe_affect = #{exeAffect,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_date = #{updateDate,jdbcType=TIMESTAMP},
-      is_valid = #{isValid,jdbcType=INTEGER}
+        plan_item = #{planItem,jdbcType=VARCHAR},
+        plan_date = #{planDate,jdbcType=TIMESTAMP},
+        exe_affect = #{exeAffect,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+        is_valid = #{isValid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
   <select id="selectByParams" parameterType="com.xxxx.crm.query.CusDevPlanQuery" resultType="com.xxxx.crm.vo.CusDevPlan">
     select
-        <include refid="Base_Column_List"/>
+    <include refid="Base_Column_List"></include>
     from
-        t_cus_dev_plan
+    t_cus_dev_plan
     where
-        is_valid = 1
+    is_valid = 1
     and
-        sale_chance_id =#{saleChanceId}
+    sale_chance_id = #{saleChanceId}
   </select>
+
 </mapper>
