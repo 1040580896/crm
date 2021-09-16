@@ -40,8 +40,7 @@
         默认返回的饿是受影响的行数，可以设置返回主键（自动增长）
         useGeneratedKeys:取值范围是true或false，表示会获取主键，并赋值到keyProperty属性设置的模型属性（JavaBean实体类中的属性字段）
         keyProperty:设置返回值将赋值给数据属性的哪个属性字段
-        keyColumn:设置数据库自动生动的朱主键名
-
+        keyColumn:设置数据库自动生动的主键名
         返回的主键会自动设置到实体类中对应的id属性字段中
   -->
   <insert id="insertSelective" parameterType="com.xxxx.crm.vo.User" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
@@ -208,15 +207,15 @@
   <!-- 删除用户 -->
   <update id="deleteBatch">
     update
-    t_user
+        t_user
     set
-    is_valid = 0
+        is_valid = 0
     where
-    id
+        id
     in
-    <foreach collection="array" item="id" open="(" close=")" separator=",">
-      #{id}
-    </foreach>
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
   </update>
 
 

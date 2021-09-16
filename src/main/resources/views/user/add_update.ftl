@@ -39,6 +39,15 @@
                 </div>
             </div>
 
+            <div class="layui-form-item layui-row layui-col-xs12">
+                <label class="layui-form-label">角色</label>
+                <div class="layui-input-block">
+                    <select name="roleIds" xm-select="selectId">
+                    </select>
+                </div>
+            </div>
+
+
 
             <br/>
             <div class="layui-form-item layui-row layui-col-xs12">

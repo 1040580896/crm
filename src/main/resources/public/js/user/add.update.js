@@ -1,8 +1,9 @@
-layui.use(['form', 'layer'], function () {
+layui.use(['form', 'layer','formSelects'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery;
 
+    var formSelects = layui.formSelects;
     /**
      * 表单Submit监听
      */
@@ -60,5 +61,25 @@ layui.use(['form', 'layer'], function () {
         var index = parent.layer.getFrameIndex(window.name); // 先得到当前iframe层的索引
         parent.layer.close(index); // 再执行关闭
     });
+
+
+    /**
+     * 加载角色下拉框
+     *
+     * 配置远程搜索, 请求头, 请求参数, 请求类型等
+     *
+     * formSelects.config(ID, Options, isJson);
+     *
+     * @param ID        xm-select的值
+     * @param Options   配置项
+     * @param isJson    是否传输json数据, true将添加请求头 Content-Type: application/json; charset=UTF-8
+     */
+    var userId = $("[name='id']").val();
+    formSelects.config("selectId",{
+        type:"post", // 请求方式
+        searchUrl: ctx+"/role/queryAllRoles?userId="+userId, // 请求地址
+        keyName: 'roleName',  // 下拉框中的文本内容，要与返回的数据中对应key一致
+        keyVal: 'id'
+    }, true);
 
 });
