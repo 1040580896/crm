@@ -107,6 +107,11 @@ public abstract class BaseService<T,ID> {
     }
 
 
+    /**
+     * 查询数据表格对应的数据
+     * @param baseQuery
+     * @return
+     */
     public Map<String, Object> queryByParamsForTable(BaseQuery baseQuery) {
         Map<String,Object> result = new HashMap<String,Object>();
         PageHelper.startPage(baseQuery.getPage(),baseQuery.getLimit());
@@ -117,5 +122,6 @@ public abstract class BaseService<T,ID> {
         result.put("msg","");
         return result;
     }
+
 
 }
