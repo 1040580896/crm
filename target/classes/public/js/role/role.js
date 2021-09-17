@@ -71,6 +71,12 @@ layui.use(['table','layer'],function(){
               if(data.event=="add"){// 添加操作
                      //打开添加/更新角色的对话框
                      openAddOrUpdateRoleDiaLog();
+              }else if(data.event=="grant"){//授权
+                     // 获取数据表格选中的记录数据
+                     var checkStatus = table.checkStatus(data.config.id);
+                     // 打开授权的对话框
+                     openAddGrantDialog(checkStatus.data);
+
               }
        });
 
@@ -141,6 +147,32 @@ layui.use(['table','layer'],function(){
                      }
               });
        });
+       }
+
+       /**
+        * 打开授权页面
+        */
+       function openAddGrantDialog(data){
+              //判断是否选择角色记录
+              if(data.length==0){
+                     layer.msg("请选择要授权的角色",{icon:5});
+                     return;
+              }
+              // 只支持单个角色授权
+              if(data.length>1){
+                     layer.msg("暂不支持批量角色授权",{icon:5});
+                     return;
+              }
+
+              var url = ctx+"/module/toAddGrantPage?roleId="+data[0].id;
+              var title = "<h3>角色管理 - 角色授权</h3>";
+              layui.layer.open({
+                     title:title,
+                     content:url,
+                     type:2,
+                     area: ["600px","600px"],
+                     maxmin:true
+              })
        }
 
 });
