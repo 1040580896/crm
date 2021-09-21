@@ -140,4 +140,33 @@
     where
         role_id = #{roleId}
   </select>
+
+  <!--通过用户ID查询对应的资源列表(资源权限码)-->
+  <select id="queryUserHasRoleHasPermissionByUserId" parameterType="int" resultType="java.lang.String">
+    SELECT DISTINCT
+        acl_value
+    FROM
+        t_user_role ur
+            LEFT JOIN t_permission p ON ur.role_id = p.role_id
+    WHERE
+        ur.user_id = #{userId}
+    </select>
+
+  <!-- 通过资源ID查询权限记录 -->
+  <select id="countPermissionByModuleId" parameterType="int" resultType="java.lang.Integer">
+    select
+            count(1)
+    from
+            t_permission
+    where
+            module_id=#{id}
+  </select>
+
+  <!-- 通过资源ID删除权限记录 -->
+  <delete id="deletePermissionByModuleId" parameterType="int">
+    delete from
+            t_permission
+    where
+            module_id=#{id}
+  </delete>
 </mapper>

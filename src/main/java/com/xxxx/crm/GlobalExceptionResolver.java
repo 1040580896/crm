@@ -2,6 +2,7 @@ package com.xxxx.crm;
 
 import com.alibaba.fastjson.JSON;
 import com.xxxx.crm.base.ResultInfo;
+import com.xxxx.crm.exceptions.AuthException;
 import com.xxxx.crm.exceptions.NoLoginException;
 import com.xxxx.crm.exceptions.ParamsException;
 import org.springframework.stereotype.Component;
@@ -81,6 +82,11 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
                     //设置异常信息
                     modelAndView.addObject("code",p.getCode());
                     modelAndView.addObject("msg",p.getMsg());
+                } else  if(ex instanceof AuthException){ //认证异常
+                    AuthException a = (AuthException) ex;
+                    //设置异常信息
+                    modelAndView.addObject("code",a.getCode());
+                    modelAndView.addObject("msg",a.getMsg());
                 }
                 return modelAndView;
             }else{
@@ -97,6 +103,10 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
                     ParamsException p = (ParamsException) ex;
                     resultInfo.setCode(p.getCode());
                     resultInfo.setMsg(p.getMsg());
+                } else  if(ex instanceof AuthException){ //认证异常
+                    AuthException a = (AuthException) ex;
+                    resultInfo.setCode(a.getCode());
+                    resultInfo.setMsg(a.getMsg());
                 }
                 // 设置响应类型和编码格式 设置响应JSON格式
                 response.setContentType("application/json;charset=utf-8");

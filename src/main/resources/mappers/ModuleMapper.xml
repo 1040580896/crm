@@ -185,7 +185,55 @@
             is_valid = 1
   </select>
 
+  <!--查询资源列表-->
+  <select id="queryModuleList" resultMap="BaseResultMap">
+    select
+        <include refid="Base_Column_List"/>
+    from
+        t_module
+    where
+        is_valid = 1
+  </select>
 
 
 
+  <!-- 通过层级与模块名查询资源对象 -->
+  <select id="queryModuleByGradeAndModuleName" resultType="com.xxxx.crm.vo.Module">
+    select
+        <include refid="Base_Column_List"></include>
+    from
+        t_module
+    where
+        is_valid = 1 and grade = #{grade} and module_name = #{moduleName}
+  </select>
+
+  <!-- 通过层级与URL查询资源对象 -->
+  <select id="queryModuleByGradeAndUrl" resultType="com.xxxx.crm.vo.Module">
+    select
+        <include refid="Base_Column_List"></include>
+    from
+        t_module
+    where
+        is_valid = 1 and grade = #{grade} and url = #{url}
+  </select>
+
+  <!-- 通过权限码查询资源对象 -->
+  <select id="queryModuleByOptValue" resultType="com.xxxx.crm.vo.Module">
+    select
+        <include refid="Base_Column_List"></include>
+    from
+        t_module
+    where
+        is_valid = 1 and opt_value = #{optValue}
+  </select>
+
+  <!-- 查询指定资源是否存在子记录 -->
+  <select id="queryModuleByParentId" parameterType="int" resultType="java.lang.Integer">
+    select
+            count(1)
+    from
+            t_module
+    where
+            is_valid = 1 and parent_id = #{id}
+  </select>
 </mapper>

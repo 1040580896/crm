@@ -2,6 +2,7 @@ package com.xxxx.crm.controller;
 
 import com.xxxx.crm.base.BaseController;
 import com.xxxx.crm.base.ResultInfo;
+import com.xxxx.crm.annotation.RequiredPermission;
 import com.xxxx.crm.enums.StateStatus;
 import com.xxxx.crm.query.SaleChanceQuery;
 import com.xxxx.crm.service.SaleChanceService;
@@ -30,11 +31,12 @@ public class SaleChanceController extends BaseController {
     private SaleChanceService saleChanceService;
 
     /**
-     * 营销机会数据查询(分页多条件查询)
+     * 营销机会数据查询(分页多条件查询)101001
      * 如果flag的值不为空，且值为一，则表示当前查询的是客户开发计划；否则查询营销机会数据
      * @param saleChanceQuery
      * @return
      */
+    @RequiredPermission(code = "101001")
     @RequestMapping("list")
     @ResponseBody
     public Map<String,Object> querySaleChanceByParams(SaleChanceQuery saleChanceQuery,Integer flag,HttpServletRequest request){
@@ -55,17 +57,19 @@ public class SaleChanceController extends BaseController {
      * 进入营销机会管理页面
      * @return
      */
+    @RequiredPermission(code = "1010")
     @RequestMapping("index")
     public String index(){
         return "saleChance/sale_chance";
     }
 
     /**
-     * 添加营销机会
+     * 添加营销机会 101002
      * @param saleChance
      * @return
      */
-    @PostMapping("add")
+    @RequiredPermission(code = "101002")
+    @RequestMapping("add")
     @ResponseBody
     public ResultInfo addSaleChance(SaleChance saleChance, HttpServletRequest request){
         // 从Cookie中获取当前登陆的用户名
@@ -78,10 +82,11 @@ public class SaleChanceController extends BaseController {
     }
 
     /**
-     * 更新营销机会
+     * 更新营销机会  101003
      * @param saleChance
      * @return
      */
+    @RequiredPermission(code = "101004")
     @PostMapping("update")
     @ResponseBody
     public ResultInfo updateSaleChance(SaleChance saleChance, HttpServletRequest request){
@@ -92,7 +97,7 @@ public class SaleChanceController extends BaseController {
 
 
     /**
-     * 进入添加或者修改营销机会数据页面
+     * 进入添加或者修改营销机会数据页面  101003
      * @return
      */
     @RequestMapping("toSaleChancePage")
@@ -108,10 +113,11 @@ public class SaleChanceController extends BaseController {
     }
 
     /**
-     * 删除营销机会
+     * 删除营销机会  101003
      * @param ids
      * @return
      */
+    @RequiredPermission(code = "101003")
     @ResponseBody
     @PostMapping("delete")
     public ResultInfo deleteSaleChance(Integer[] ids){
