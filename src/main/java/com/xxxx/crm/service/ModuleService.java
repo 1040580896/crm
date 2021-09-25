@@ -219,8 +219,6 @@ public class ModuleService extends BaseService<Module,Integer> {
      *  4. 执行删除（更新）操作，判断受影响的行数
      *
      *
-     * 乐字节：专注线上IT培训
-     * 答疑老师微信：lezijie
      * @param id
      * @return void
      */

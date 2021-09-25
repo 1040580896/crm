@@ -3,6 +3,7 @@ package com.xxxx.crm.vo;
 import java.util.Date;
 
 public class Permission {
+
     private Integer id;
 
     private Integer roleId;
