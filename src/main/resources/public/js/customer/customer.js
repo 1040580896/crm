@@ -79,6 +79,14 @@ layui.use(['table','layer',"form"],function(){
             var checkStatus = table.checkStatus(data.config.id);
             // 打开客户订单的对话框（传递选中的数据记录)
             openCustomerOrderDialog(checkStatus.data);
+        }else if(data.event=="link") {//客户联系人管理
+            // 获取被选中的数据的相关信息
+            var checkStatus = table.checkStatus(data.config.id);
+            // 打开客户订单的对话框（传递选中的数据记录)
+            openCustomerLinkDialog(checkStatus.data);
+
+        }else if(data.event=="交往记录"){
+
         }
     })
 
@@ -189,6 +197,40 @@ layui.use(['table','layer',"form"],function(){
             maxmin:true
         });
     }
+
+    /**
+     * 打开指定的订单对话框
+     * @param data
+     */
+    function  openCustomerLinkDialog(data){
+        //判断用户是否选择客户
+        if(data.length==0){
+            layer.msg("请选择想要查看客户的联系人",{icon:5});
+            return;
+        }
+        //判断用户是否多选
+        if(data.length>1){
+            layer.msg("暂不支持批量查看",{icon:5});
+            return;
+        }
+
+        //打开对话框
+        // iframe层
+        layui.layer.open({
+            // 类型
+            type: 2,
+            // 标题
+            title: "<h3>客户管理 - 客户联系人查看</h3>",
+            // 宽高
+            area: ['700px', '500px'],
+            // url地址
+            content: ctx+"/customer_link/toCustomerLinkPage?customerId="+data[0].id,
+            // 可以最大化与最小化
+            maxmin:true
+        });
+    }
+
+
 
 
 

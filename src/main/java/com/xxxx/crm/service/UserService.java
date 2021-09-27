@@ -383,5 +383,11 @@ public class UserService extends BaseService<User,Integer> {
 
     }
 
-
+    /**
+     * 查询所有的客户经理
+     * @return
+     */
+    public List<Map<String, Object>> queryAllCustomerManagers() {
+        return userMapper.queryAllCustomerManagers();
+    }
 }
