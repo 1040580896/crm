@@ -65,7 +65,7 @@
 
 
 
-        <table tableName="t_customer_serve" domainObjectName="CustomerServe"
+        <table tableName="t_customer_contact" domainObjectName="CustomerContact"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 

@@ -16,9 +16,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author xiaokaixin
@@ -187,6 +185,26 @@ public class CustomerServeService extends BaseService<CustomerServe,Integer> {
 
         // 执行更新操作，判断受影响的行数
         AssertUtil.isTrue(customerServeMapper.updateByPrimaryKeySelective(customerServe)< 1, "服务更新失败！");
+
+    }
+
+    public Map<String, Object> countServerMake(){
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String, Object>> dataList = customerServeMapper.countServerMake();
+
+        List<String> data1 = new ArrayList<>();
+        List<Integer> data2 = new ArrayList<>();
+
+        if(dataList!=null&&dataList.size()>0){
+            dataList.forEach(m->{
+                data1.add(m.get("type").toString());
+                data2.add(Integer.parseInt(m.get("total").toString()));
+            });
+        }
+        map.put("data1",data1);
+        map.put("data2",data2);
+        return  map;
+
 
     }
 }

@@ -259,4 +259,14 @@
     </where>
   </select>
 
+  <!--查询服务类型的个数-->
+  <select id="countServerMake" resultType="java.util.Map">
+    SELECT  DISTINCT d.data_dic_value type,count(*) total
+    from t_customer_serve c
+                 LEFT JOIN t_datadic d
+            on c.serve_type = d.id
+    WHERE
+            c.is_valid = 1
+    GROUP BY d.data_dic_value
+  </select>
 </mapper>

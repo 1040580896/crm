@@ -183,6 +183,12 @@ public class CustomerServeController extends BaseController {
     }
 
 
+    @RequestMapping("countServerMake")
+    @ResponseBody
+    public Map<String, Object> countServerMake(){
+        return customerServeService.countServerMake();
+    }
+
 
 
 }

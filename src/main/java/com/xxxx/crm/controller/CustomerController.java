@@ -112,4 +112,46 @@ public class CustomerController extends BaseController {
         model.addAttribute("customer",customerService.selectByPrimaryKey(customerId));
         return "customer/customer_order";
     }
+
+
+    /**
+     * 客户贡献分析
+     *
+     *
+     * @param customerQuery
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     */
+    @RequestMapping("queryCustomerContributionByParams")
+    @ResponseBody
+    public Map<String,Object> queryCustomerContributionByParams(CustomerQuery customerQuery) {
+        return customerService.queryCustomerContributionByParams(customerQuery);
+    }
+
+    /**
+     * 查询客户构成 （折线图）
+     *
+     *
+     * @param
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     */
+    @RequestMapping("countCustomerMake")
+    @ResponseBody
+    public Map<String, Object> countCustomerMake() {
+        return customerService.countCustomerMake();
+    }
+
+
+    /**
+     * 查询客户构成 （饼状图）
+     *
+     * @param
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     */
+    @RequestMapping("countCustomerMake02")
+    @ResponseBody
+    public Map<String, Object> countCustomerMake02() {
+        return customerService.countCustomerMake02();
+    }
+
+
 }

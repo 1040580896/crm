@@ -408,4 +408,64 @@
       #{item}
     </foreach>
   </update>
+
+
+  <!-- 查询客户贡献数据 -->
+  <select id="queryCustomerContributionByParams" parameterType="com.xxxx.crm.query.CustomerQuery" resultType="map">
+    SELECT
+    c.`name`,sum(od.sum) total
+    FROM
+    t_customer c
+    LEFT JOIN
+    t_customer_order o
+    ON
+    c.id = o.cus_id
+    LEFT JOIN
+    t_order_details od
+    ON
+    o.id = od.order_id
+    <where>
+      c.is_valid = 1 AND c.state = 0 AND o.is_valid = 1 AND o.state = 1 AND od.is_valid = 1
+      <if test="null != customerName and customerName != ''">
+        and c.name like concat('%',#{customerName},'%')
+      </if>
+      <if test="null != time and time != ''">
+        and o.order_date &gt; #{time}
+      </if>
+    </where>
+    GROUP BY
+    c.`name`
+    <if test="null != type">
+      <if test="type==1">
+        HAVING total &gt;= 0 and total &lt;= 1000
+      </if>
+      <if test="type==2">
+        HAVING total &gt; 1000 and total &lt;= 3000
+      </if>
+      <if test="type==3">
+        HAVING total &gt; 3000 and total &lt;= 5000
+      </if>
+      <if test="type==4">
+        HAVING total &gt; 5000
+      </if>
+    </if>
+    ORDER BY
+    total desc
+  </select>
+
+
+
+  <!-- 查询客户构成 -->
+  <select id="countCustomerMake" resultType="map">
+    SELECT
+        `level`,count(1) total
+    FROM
+        t_customer
+    WHERE
+        is_valid = 1
+      AND
+        state = 0
+    GROUP BY
+        `level`
+  </select>
 </mapper>

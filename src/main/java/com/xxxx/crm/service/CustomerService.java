@@ -260,4 +260,100 @@ public class CustomerService extends BaseService<Customer,Integer> {
             AssertUtil.isTrue(customerMapper.updateCustomerStateByIds(lossCustomerIds) != lossCustomerIds.size(), "客户流失数据转移失败！");
         }
     }
+
+    /**
+     * 查询客户贡献分析
+     *
+     *
+     * @param customerQuery
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     */
+    public Map<String,Object> queryCustomerContributionByParams(CustomerQuery customerQuery) {
+        Map<String, Object> map = new HashMap<>();
+
+        // 开启分页
+        PageHelper.startPage(customerQuery.getPage(), customerQuery.getLimit());
+        // 得到对应分页对象
+        PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(customerMapper.queryCustomerContributionByParams(customerQuery));
+
+        // 设置map对象
+        map.put("code",0);
+        map.put("msg","success");
+        map.put("count",pageInfo.getTotal());
+        // 设置分页好的列表
+        map.put("data",pageInfo.getList());
+
+        return map;
+    }
+
+
+    /**
+     * 查询客户构成 （折线图数据处理）
+     * @param
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     */
+    public Map<String, Object> countCustomerMake() {
+        Map<String, Object> map = new HashMap<>();
+        // 查询客户构成数据的列表
+        List<Map<String,Object>> dataList = customerMapper.countCustomerMake();
+        // 折线图X轴数据  数组
+        List<String> data1 = new ArrayList<>();
+        // 折线图Y轴数据  数组
+        List<Integer> data2 = new ArrayList<>();
+
+        // 判断数据列表 循环设置数据
+        if (dataList != null && dataList.size() > 0) {
+            // 遍历集合
+            dataList.forEach(m -> {
+                // 获取"level"对应的数据，设置到X轴的集合中
+                data1.add(m.get("level").toString());
+                // 获取"total"对应的数据，设置到Y轴的集合中
+                data2.add(Integer.parseInt(m.get("total").toString()));
+            });
+        }
+
+        // 将X轴的数据集合与Y轴的数据集合，设置到map中
+        map.put("data1",data1);
+        map.put("data2",data2);
+
+        return map;
+    }
+
+
+    /**
+     * 查询客户构成 （饼状图数据处理）
+     *
+     *
+     * @param
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     */
+    public Map<String, Object> countCustomerMake02() {
+        Map<String, Object> map = new HashMap<>();
+        // 查询客户构成数据的列表
+        List<Map<String,Object>> dataList = customerMapper.countCustomerMake();
+        // 饼状图数据   数组（数组中是字符串）
+        List<String> data1 = new ArrayList<>();
+        // 饼状图的数据  数组（数组中是对象）
+        List<Map<String, Object>> data2 = new ArrayList<>();
+
+        // 判断数据列表 循环设置数据
+        if (dataList != null && dataList.size() > 0) {
+            // 遍历集合
+            dataList.forEach(m -> {
+                // 饼状图数据   数组（数组中是字符串）
+                data1.add(m.get("level").toString());
+                // 饼状图的数据  数组（数组中是对象）
+                Map<String,Object> dataMap = new HashMap<>();
+                dataMap.put("name", m.get("level"));
+                dataMap.put("value", m.get("total"));
+                data2.add(dataMap);
+            });
+        }
+
+        // 将X轴的数据集合与Y轴的数据集合，设置到map中
+        map.put("data1",data1);
+        map.put("data2",data2);
+
+        return map;
+    }
 }
